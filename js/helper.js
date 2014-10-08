@@ -29,6 +29,13 @@ var HTMLWelcomeMsg = "<span class='welcome-message'>%data%</span>";
 var HTMLskillsStart = "<h3 id='skillsH3'>Skills at a Glance:</h3><ul id='skills' class='flex-box'></ul>";
 var HTMLskills = "<li class='flex-item'><span class='white-text'>%data%</span></li>";
 
+var HTMLprogrammingStart = "<div class='programming-entry'></div>";
+var HTMLprogrammingCompany = "<a href='#'>%data%";
+var HTMLprogrammingTitle = " %data%</a>";
+// TODO: add class to format date in gray italics
+var HTMLprogrammingDates = "<div>%data%</div>";
+var HTMLprogrammingDescription = "<p><br>%data%</p>";
+
 var HTMLworkStart = "<div class='work-entry'></div>";
 var HTMLworkEmployer = "<a href='#'>%data%";
 var HTMLworkTitle = " - %data%</a>";
@@ -44,7 +51,7 @@ var HTMLprojectImage = "<img src='%data%'>";
 
 var HTMLschoolStart = "<div class='education-entry'></div>";
 var HTMLschoolName = "<a href='#'>%data%";
-var HTMLschoolDegree = " -- %data%</a>";
+var HTMLschoolDegree = " %data%</a>";
 var HTMLschoolDates = "<div class='date-text'>%data%</div>";
 var HTMLschoolLocation = "<div class='location-text'>%data%</div>";
 var HTMLschoolMajor = "<em><br>Major: %data%</em>"
@@ -87,7 +94,10 @@ function logClicks(x,y) {
 }
 
 $(document).click(function(loc) {
-  // your code goes here!
+  var x = loc.pageX;
+  var y = loc.pageY;
+
+  logClicks(x,y);
 });
 
 
@@ -128,14 +138,12 @@ function initializeMap() {
     // adds the single location property from bio to the locations array
     locations.push(bio.contacts.location);
     
-    // iterates through school locations and appends each location to
-    // the locations array
+    // iterates through school locations and appends each location to the locations array
     for (var school in education.schools) {
       locations.push(education.schools[school].location);
     }
 
-    // iterates through work locations and appends each location to
-    // the locations array
+    // iterates through work locations and appends each location to the locations array
     for (var job in work.jobs) {
       locations.push(work.jobs[job].location);
     }
@@ -144,9 +152,7 @@ function initializeMap() {
   }
 
   /*
-  createMapMarker(placeData) reads Google Places search results to create map pins.
-  placeData is the object returned from search results containing information
-  about a single location.
+  createMapMarker(placeData) reads Google Places search results to create map pins.placeData is the object returned from search results containing information about a single location.
   */
   function createMapMarker(placeData) {
 
@@ -163,16 +169,14 @@ function initializeMap() {
       title: name
     });
     
-    // infoWindows are the little helper windows that open when you click
-    // or hover over a pin on a map. They usually contain more information
-    // about a location.
+    // infoWindows are the little helper windows that open when you click or hover over a pin on a map. They usually contain more information about a location.
     var infoWindow = new google.maps.InfoWindow({
       content: name
     });
 
     // hmmmm, I wonder what this is about...
     google.maps.event.addListener(marker, 'click', function() {
-      // your code goes here!
+      infoWindow.open(map, marker);
     });
 
     // this is where the pin actually gets added to the map.
@@ -230,16 +234,12 @@ function initializeMap() {
   
 };
 
-/*
-Uncomment all the code below when you're ready to implement a Google Map!
-*/
-
 // Calls the initializeMap() function when the page loads
-//window.addEventListener('load', initializeMap);
+window.addEventListener('load', initializeMap);
 
 // Vanilla JS way to listen for resizing of the window 
 // and adjust map bounds
-//window.addEventListener('resize', function(e) {
+window.addEventListener('resize', function(e) {
   // Make sure the map bounds get updated on page resize
-//  map.fitBounds(mapBounds);
-//});
+ map.fitBounds(mapBounds);
+});

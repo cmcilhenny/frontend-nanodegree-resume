@@ -30,16 +30,17 @@ $("#topContacts").append(formattedTwitter);
 $("#topContacts").append(formattedGithub);
 $("#topContacts").append(formattedLocation);
 $("#topContacts").append(formattedMessage);
+$("#topContacts").append(formattedPic);
 
 
 function displaySkills() {
 	// create h3 + ul for skills
-	$("#header").append(HTMLskillsStart);
+	$("#topContacts").append(HTMLskillsStart);
 	// loop through skills and add to page
 	for (skill in bio.skills) {
 		//replace skills & append to page
 		var formattedSkills = HTMLskills.replace("%data%", bio.skills[skill]);
-		$("#skills").prepend(formattedSkills);
+		$("#skills").append(formattedSkills);
 	}
 };
 
